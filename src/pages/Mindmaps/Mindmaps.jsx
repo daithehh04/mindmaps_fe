@@ -31,6 +31,7 @@ function Mindmaps() {
       : 0
   }, [maps?.metadata?.count, query.limit])
 
+  console.log("isLoading::", isLoading)
   return (
     <div className="relative">
       <Helmet>
@@ -41,13 +42,12 @@ function Mindmaps() {
       <p className="text-lg">
         {search ? `${maps?.metadata?.count} results for "${search}"` : ""}
       </p>
-      {isLoading ||
-        (loading && (
-          <div className="absolute inset-0 z-20 flex items-center justify-center w-full bg-white opacity-70">
-            <Loading />
-          </div>
-        ))}
-      {!isLoading && maps?.metadata?.count > 0 ? (
+      {(isLoading || loading) && (
+        <div className="absolute inset-0 z-20 h-[100vh] flex items-center justify-center w-full bg-white opacity-70">
+          <Loading />
+        </div>
+      )}
+      {maps?.metadata?.count > 0 ? (
         <div>
           <MapsList
             type="maps"
@@ -60,16 +60,18 @@ function Mindmaps() {
           />
         </div>
       ) : (
-        <div className="flex flex-col justify-normal h-[50vh] items-center text-gray">
-          <MapsIcon className="w-32 h-32 text-gray1" />
-          <p className="text-black">
-            This is your map listing ... but it empty.
-          </p>
-          <p>
-            You can find all your maps here once you have some. Start creating
-            and come back later!
-          </p>
-        </div>
+        !isLoading && (
+          <div className="flex flex-col justify-normal h-[50vh] items-center text-gray">
+            <MapsIcon className="w-32 h-32 text-gray1" />
+            <p className="text-black">
+              This is your map listing ... but it empty.
+            </p>
+            <p>
+              You can find all your maps here once you have some. Start creating
+              and come back later!
+            </p>
+          </div>
+        )
       )}
     </div>
   )

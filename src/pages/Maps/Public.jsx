@@ -41,13 +41,12 @@ function Public() {
       <p className="text-lg">
         {search ? `${maps?.metadata?.count} results for "${search}"` : ""}
       </p>
-      {isLoading ||
-        (loading && (
-          <div className="absolute inset-0 z-20 flex items-center justify-center w-full bg-white opacity-70">
-            <Loading />
-          </div>
-        ))}
-      {!isLoading && maps?.metadata?.count > 0 ? (
+      {(isLoading || loading) && (
+        <div className="absolute inset-0 z-20 h-[100vh] flex items-center justify-center w-full bg-white opacity-70">
+          <Loading />
+        </div>
+      )}
+      {maps?.metadata?.count > 0 ? (
         <div>
           <MapsList
             type="public"
@@ -60,14 +59,16 @@ function Public() {
           />
         </div>
       ) : (
-        <div className="flex flex-col items-center h-[50vh] justify-center text-gray">
-          <PublicIcon className="w-[240px] h-36" />
-          <p className="mt-2 text-black">No Public Maps</p>
-          <p className="w-[400px] text-center">
-            You can make maps public via the context menu. Share your creation
-            with the world.
-          </p>
-        </div>
+        !isLoading && (
+          <div className="flex flex-col items-center h-[50vh] justify-center text-gray">
+            <PublicIcon className="w-[240px] h-36" />
+            <p className="mt-2 text-black">No Public Maps</p>
+            <p className="w-[400px] text-center">
+              You can make maps public via the context menu. Share your creation
+              with the world.
+            </p>
+          </div>
+        )
       )}
     </div>
   )

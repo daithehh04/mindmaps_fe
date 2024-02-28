@@ -44,11 +44,11 @@ function Favorite() {
         {search ? `${maps?.metadata?.count} results for "${search}"` : ""}
       </p>
       {isLoading && (
-        <div className="w-full h-[60vh] bg-white flex items-center justify-center">
+        <div className="w-full h-[100vh] opacity-70 bg-white flex items-center justify-center">
           <Loading />
         </div>
       )}
-      {!isLoading && maps?.metadata?.count > 0 ? (
+      {maps?.metadata?.count > 0 ? (
         <div>
           <MapsList
             type="favorite"
@@ -61,14 +61,16 @@ function Favorite() {
           />
         </div>
       ) : (
-        <div className="flex flex-col items-center h-[80vh] justify-center text-gray">
-          <FavoriteIcon className="w-[240px] h-36" />
-          <p className="mt-2 text-black">No Favorite Maps</p>
-          <p className="w-[400px] text-center">
-            You can favorite maps via the context menu, or simply drag them onto
-            the sidebar item.
-          </p>
-        </div>
+        !isLoading && (
+          <div className="flex flex-col items-center h-[80vh] justify-center text-gray">
+            <FavoriteIcon className="w-[240px] h-36" />
+            <p className="mt-2 text-black">No Favorite Maps</p>
+            <p className="w-[400px] text-center">
+              You can favorite maps via the context menu, or simply drag them
+              onto the sidebar item.
+            </p>
+          </div>
+        )
       )}
     </>
   )
