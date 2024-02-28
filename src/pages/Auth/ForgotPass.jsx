@@ -16,6 +16,7 @@ import { handleForgotPassword } from "~/services/auth.service"
 import { FaCheckCircle } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
 import Loading from "~/components/Loading"
+import { Helmet } from "react-helmet"
 function ForgotPass() {
   const [valueEmail, setValueEmail] = useState("")
   const [errors, setErrors] = useState(false)
@@ -61,6 +62,10 @@ function ForgotPass() {
   }
   return (
     <div className="relative">
+      <Helmet>
+        <title>Forgot Password | Mindmap</title>
+        <meta name="description" content="forgot password mindmap" />
+      </Helmet>
       <Header />
       <div className="w-[36rem] h-[100vh] flex flex-col justify-center mx-auto">
         <form
