@@ -28,11 +28,12 @@ import { useDisclosure } from "@nextui-org/react"
 import Loading from "~/components/Loading"
 import NotFound from "~/components/NotFound"
 import { Helmet } from "react-helmet"
-import { TbRectangleFilled } from "react-icons/tb"
+import { setType } from "~/stores/slices/maps.slice"
 
 function Detail() {
   const params = useParams()
   const id = params.id
+  const type = id.split("~")[1]
   const dataMapDetail = useSelector((state) => state.maps.mapsDetail)
   const loadingDetailMap = useSelector((state) => state.maps.loading)
   const [loadingUpdate, setLoadingUpdate] = useState(false)
@@ -42,6 +43,10 @@ function Detail() {
   const titleRef = useRef("")
   const descRef = useRef("")
   const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(setType(type))
+  }, [type])
+
   const [updateMaps, setUpdateMaps] = useState(null)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   useEffect(() => {

@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+import { v4 as uuidv4 } from "uuid"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ReactFlow, {
   useNodesState,
@@ -12,12 +14,11 @@ import ReactFlow, {
 import "reactflow/dist/style.css"
 import { useSelector } from "react-redux"
 import TextUpdaterNode from "./TextUpdaterNode.jsx"
-
-const initialNodes = [
+let initialNodes = [
   {
     id: "0",
     type: "textUpdater",
-    data: { label: "My mindmap" },
+    data: { value: "My mindmap" },
     position: { x: 0, y: 0 },
   },
 ]
@@ -29,11 +30,16 @@ const AddNodeOnEdgeDrop = ({ onUpdateMaps }) => {
   const connectingNodeId = useRef(null)
   const [selectedIdNode, setSelectedIdNode] = useState(null)
   const [selectedIdEdge, setSelectedIdEdge] = useState(null)
+  const type = useSelector((state) => state.maps.type)
+
   const [nodes, setNodes, onNodesChange] = useNodesState(
     mindmap?.nodes || initialNodes
   )
+  console.log(nodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(mindmap?.edges || [])
-
+  const generateRandomId = () => {
+    return uuidv4()
+  }
   const { screenToFlowPosition } = useReactFlow()
 
   useEffect(() => {
@@ -66,17 +72,16 @@ const AddNodeOnEdgeDrop = ({ onUpdateMaps }) => {
       if (!connectingNodeId.current) return
 
       const targetIsPane = event.target.classList.contains("react-flow__pane")
-      console.log(nodes)
       if (targetIsPane) {
         // we need to remove the wrapper bounds, in order to get the correct position
-        const id = `${nodes.length}`
+        const id = generateRandomId()
         const newNode = {
           id,
           position: screenToFlowPosition({
             x: event.clientX,
             y: event.clientY,
           }),
-          data: { value: `Node ${id}` },
+          data: { value: `New node` },
           origin: [0.5, 0.0],
           type: "textUpdater",
         }
@@ -86,7 +91,7 @@ const AddNodeOnEdgeDrop = ({ onUpdateMaps }) => {
         )
       }
     },
-    [screenToFlowPosition, setEdges, nodes, setNodes]
+    [screenToFlowPosition, setEdges, setNodes]
   )
 
   useEffect(() => {
@@ -101,12 +106,6 @@ const AddNodeOnEdgeDrop = ({ onUpdateMaps }) => {
     })
   }, [selectedIdNode, setNodes, selectedIdEdge, setEdges])
 
-  // if (isLoading)
-  //   return (
-  //     <div className="flex items-center justify-center h-[70vh]">
-  //       <Loading />
-  //     </div>
-  //   )
   return (
     <div className="wrapper" ref={reactFlowWrapper}>
       <ReactFlow
@@ -114,8 +113,8 @@ const AddNodeOnEdgeDrop = ({ onUpdateMaps }) => {
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
         deleteKeyCode={null}
+        onConnect={onConnect}
         onConnectStart={onConnectStart}
         onConnectEnd={onConnectEnd}
         nodeTypes={nodeTypes}

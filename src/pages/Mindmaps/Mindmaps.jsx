@@ -31,7 +31,6 @@ function Mindmaps() {
       : 0
   }, [maps?.metadata?.count, query.limit])
 
-  console.log("isLoading::", isLoading)
   return (
     <div className="relative">
       <Helmet>

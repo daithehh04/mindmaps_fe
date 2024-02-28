@@ -13,6 +13,7 @@ import {
 } from "../middlewares/maps.middleware"
 
 const initialState = {
+  type: null,
   maps: {},
   mapsDeleted: {},
   key: null,
@@ -26,6 +27,9 @@ export const mapsSlice = createSlice({
   reducers: {
     setKey: (state, action) => {
       state.key = action.payload
+    },
+    setType: (state, action) => {
+      state.type = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -124,11 +128,10 @@ export const mapsSlice = createSlice({
     /**
      * requestRestoreAllMindmap
      */
-    builder.addCase(requestRestoreAllMindmap.fulfilled, (state, action) => {
-      console.log("restore all::", action.payload)
+    builder.addCase(requestRestoreAllMindmap.fulfilled, (state) => {
       state.loading = false
     })
   },
 })
-export const { setKey } = mapsSlice.actions
+export const { setKey, setType } = mapsSlice.actions
 export default mapsSlice.reducer

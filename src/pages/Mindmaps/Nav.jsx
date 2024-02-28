@@ -1,5 +1,13 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react"
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
+} from "@nextui-org/react"
 import Avatar from "~/components/Avatar"
 import { v4 as uuidv4 } from "uuid"
 import {
@@ -25,6 +33,51 @@ const heading = {
   "/maps/public": "Public Maps",
   "/maps/trashed": "Trashed Maps",
 }
+const edges = [
+  { id: "0-1", source: "0", target: "1" },
+  { id: "0-2", source: "0", target: "2" },
+]
+
+const node_1 = [
+  {
+    id: "0",
+    data: { value: "My mindmap" },
+    position: { x: 0, y: 0 },
+    type: "textUpdater",
+  },
+  {
+    id: "1",
+    data: { value: "New node" },
+    position: { x: 130, y: 100 },
+    type: "textUpdater",
+  },
+  {
+    id: "2",
+    data: { value: "New node" },
+    position: { x: -130, y: 100 },
+    type: "textUpdater",
+  },
+]
+const node_2 = [
+  {
+    id: "0",
+    data: { value: "My mindmap" },
+    position: { x: -500, y: 155 },
+    type: "textUpdater",
+  },
+  {
+    id: "1",
+    data: { value: "New node" },
+    position: { x: -220, y: 60 },
+    type: "textUpdater",
+  },
+  {
+    id: "2",
+    data: { value: "New node" },
+    position: { x: -220, y: 220 },
+    type: "textUpdater",
+  },
+]
 function Navigate({ onSearch, onLoading }) {
   const [selectedKeys, setSelectedKeys] = useState(new Set(["new"]))
   const key = Array.from(selectedKeys).map((k) => k)
@@ -33,6 +86,8 @@ function Navigate({ onSearch, onLoading }) {
     dispatch(setKey(key[0]))
   }, [key[0]])
   const userInfo = useSelector((state) => state.auth.userInfo)
+  const type = useSelector((state) => state.maps.type)
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const location = useLocation()
   const navigate = useNavigate()
   const pathname = location.pathname
@@ -48,30 +103,48 @@ function Navigate({ onSearch, onLoading }) {
     setSearchValue(e.target.value)
     debounced(e.target.value)
   }
-  const handleCreateMindmap = async () => {
+
+  const handleCreateMindmap = async (type) => {
     const idMap = uuidv4()
     const payload = {
-      id: idMap,
+      id: `${idMap}~${type}`,
       user: userInfo,
       title: "Tiêu đề mindmap không tên",
       desc: "Chưa có mô tả",
       img: "https://cdn5.mindmeister.com/assets/library/general/mm-logout-illustration_220727-f35a7063c1cb3191481037c2e66edc4999ec2e6e83f4b4f15c3af6ca43753682.png",
       status: pathname === "/maps/public",
-      nodes: [
-        {
-          id: "0",
-          type: "textUpdater",
-          data: { value: "My mindmap" },
-          position: { x: 0, y: 0 },
-        },
-      ],
-      edges: [],
+      nodes: node_1,
+      edges: edges,
     }
     try {
       onLoading(true)
       const res = await createMindmap(payload)
       if (res.response.ok) {
-        navigate(`/my-mindmap/${idMap}`)
+        navigate(`/my-mindmap/${idMap}~${type}`)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      onLoading(false)
+    }
+  }
+  const handleCreateMindmap2 = async (type) => {
+    const idMap = uuidv4()
+    const payload = {
+      id: `${idMap}~${type}`,
+      user: userInfo,
+      title: "Tiêu đề mindmap không tên",
+      desc: "Chưa có mô tả",
+      img: "https://cdn5.mindmeister.com/assets/library/general/mm-logout-illustration_220727-f35a7063c1cb3191481037c2e66edc4999ec2e6e83f4b4f15c3af6ca43753682.png",
+      status: pathname === "/maps/public",
+      nodes: node_2,
+      edges: edges,
+    }
+    try {
+      onLoading(true)
+      const res = await createMindmap(payload)
+      if (res.response.ok) {
+        navigate(`/my-mindmap/${idMap}~${type}`)
       }
     } catch (error) {
       console.log(error)
@@ -121,14 +194,75 @@ function Navigate({ onSearch, onLoading }) {
           <Avatar user={userInfo} />
         </div>
       </div>
-      {(pathname === "/my-mindmap" || pathname === "/maps/public") && (
-        <button
-          className="px-8 mt-4 mb-6 flex gap-1 w-max items-center btn-primary py-5 !rounded-xl"
-          onClick={handleCreateMindmap}
-        >
-          <FiPlus fontSize={"3rem"} />
-        </button>
-      )}
+      <div className="flex gap-4">
+        {(pathname === "/my-mindmap" || pathname === "/maps/public") && (
+          <button
+            className="px-12 mt-4 mb-6 flex gap-1 w-max items-center btn-primary py-2 !rounded-xl"
+            onClick={onOpen}
+          >
+            <FiPlus fontSize={"3rem"} />
+          </button>
+        )}
+        {(pathname === "/my-mindmap" || pathname === "/maps/public") && (
+          <button
+            className="px-6 mt-4 mb-6 flex-col flex gap-1 w-max items-center bg-[#0000000D] hover:bg-[#1d1d1d1f] py-5 !rounded-xl"
+            onClick={() => handleCreateMindmap(1)}
+          >
+            <img src="/image/chart-map.svg" alt="" />
+            <p className="text-sm text-black">Org chart</p>
+          </button>
+        )}
+        {(pathname === "/my-mindmap" || pathname === "/maps/public") && (
+          <button
+            className="px-6 mt-4 mb-6 flex flex-col gap-1 w-max items-center bg-[#0000000D] hover:bg-[#1d1d1d1f] py-5 !rounded-xl"
+            onClick={() => handleCreateMindmap2(2)}
+          >
+            <img src="/image/project-retrospective.svg" alt="" />
+            <p className="text-sm text-black">Retrospective</p>
+          </button>
+        )}
+      </div>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl">
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Choose Type Maps
+              </ModalHeader>
+              <ModalBody>
+                <div className="flex gap-4">
+                  {(pathname === "/my-mindmap" ||
+                    pathname === "/maps/public") && (
+                    <button
+                      className="px-6 mt-4 mb-6 flex flex-col gap-1 w-max items-center bg-[#0000000D] hover:bg-[#1d1d1d1f] py-5 !rounded-xl"
+                      onClick={() => {
+                        onClose()
+                        return handleCreateMindmap(1)
+                      }}
+                    >
+                      <img src="/image/chart-map.svg" alt="" />
+                      <p className="text-sm text-black">Org chart</p>
+                    </button>
+                  )}
+                  {(pathname === "/my-mindmap" ||
+                    pathname === "/maps/public") && (
+                    <button
+                      className="px-6 mt-4 mb-6 flex flex-col gap-1 w-max items-center bg-[#0000000D] hover:bg-[#1d1d1d1f] py-5 !rounded-xl"
+                      onClick={() => {
+                        onClose()
+                        return handleCreateMindmap2(2)
+                      }}
+                    >
+                      <img src="/image/project-retrospective.svg" alt="" />
+                      <p className="text-sm text-black">Retrospective</p>
+                    </button>
+                  )}
+                </div>
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </>
   )
 }

@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useCallback, useEffect, useRef, useState } from "react"
+import { useSelector } from "react-redux"
 import { Handle, Position, useReactFlow } from "reactflow"
 export default function TextUpdaterNode({ data, isConnectable, ...rest }) {
   const [isClicked, setIsClicked] = useState(false)
   const [isEditing, setEditing] = useState(false)
   const { setNodes } = useReactFlow()
-
+  const type = useSelector((state) => state.maps.type)
   const refNode = useRef(null)
   const onDoubleClick = () => {
     setEditing(true)
@@ -49,14 +50,14 @@ export default function TextUpdaterNode({ data, isConnectable, ...rest }) {
   return (
     <div
       ref={refNode}
-      className={`text-updater-node ${isClicked && "clicked"}`}
+      className={`text-updater-node-${type} ${isClicked && "clicked"}`}
       onDoubleClick={onDoubleClick}
       onClick={handleClick}
     >
       {+rest.id !== 0 && (
         <Handle
           type="target"
-          position={Position.Top}
+          position={type === "1" ? Position.Top : Position.Left}
           isConnectable={isConnectable}
         />
       )}
@@ -76,7 +77,7 @@ export default function TextUpdaterNode({ data, isConnectable, ...rest }) {
       </div>
       <Handle
         type="source"
-        position={Position.Bottom}
+        position={type === "1" ? Position.Bottom : Position.Right}
         id="a"
         isConnectable={isConnectable}
       />

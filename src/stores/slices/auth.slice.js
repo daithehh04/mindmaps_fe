@@ -63,7 +63,7 @@ export const authSlice = createSlice({
       state.loadingLogin = true
     })
     builder.addCase(requestGetUserFromToken.fulfilled, (state, action) => {
-      state.userInfo = action.payload.metadata
+      state.userInfo = action.payload?.metadata
       state.loadingLogin = false
     })
     /**
