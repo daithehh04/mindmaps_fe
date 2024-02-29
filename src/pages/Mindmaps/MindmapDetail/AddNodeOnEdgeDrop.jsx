@@ -30,12 +30,10 @@ const AddNodeOnEdgeDrop = ({ onUpdateMaps }) => {
   const connectingNodeId = useRef(null)
   const [selectedIdNode, setSelectedIdNode] = useState(null)
   const [selectedIdEdge, setSelectedIdEdge] = useState(null)
-  const type = useSelector((state) => state.maps.type)
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
     mindmap?.nodes || initialNodes
   )
-  console.log(nodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(mindmap?.edges || [])
   const generateRandomId = () => {
     return uuidv4()
@@ -137,13 +135,10 @@ const AddNodeOnEdgeDrop = ({ onUpdateMaps }) => {
   )
 }
 function nodeColor(node) {
-  switch (node.type) {
-    case "input":
-      return "#6ede87"
-    case "output":
-      return "#6865A5"
-    default:
-      return "#ff0072"
+  if (node.id === "0") {
+    return "#00aaff"
+  } else {
+    return "#ff0072"
   }
 }
 

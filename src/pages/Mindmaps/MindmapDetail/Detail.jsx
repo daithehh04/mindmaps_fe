@@ -106,10 +106,15 @@ function Detail() {
   const formattedContent = (content) => {
     return content?.replaceAll("&nbsp;", " ")
   }
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault()
+    }
+  }
   return (
     <>
       <Helmet>
-        <title>{dataMapDetail.title} | Mindmap</title>
+        <title>{dataMapDetail.title}</title>
         <meta name="description" content={dataMapDetail.desc} />
         <meta property="og:title" content={dataMapDetail.title} />
         <meta property="og:description" content={dataMapDetail.desc} />
@@ -139,10 +144,12 @@ function Detail() {
                 className="heading-1 !text-2xl outline-none"
                 html={titleRef.current || ""}
                 disabled={false}
+                onKeyDown={handleKeyDown}
                 onChange={handleChangeTitle}
               />
               <ContentEditable
                 html={descRef.current || ""}
+                onKeyDown={handleKeyDown}
                 className="mt-2 text-xl font-thin text-black outline-none"
                 onChange={handleChangeDesc}
               />
