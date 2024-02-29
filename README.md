@@ -1,6 +1,9 @@
 # Mindmap Management: React + Vite
 
 ![MindMap Image](./public/image/prj-img.png)
+
+Mindmap after login
+
 ![MindMap Image](./public/image/maps.png)
 
 The MindMap React + Vite project is a Mind Map creation and management application built with React and Vite. This application allows users to create, edit and share Mind Maps easily and flexibly.
