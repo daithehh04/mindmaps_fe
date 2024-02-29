@@ -24,13 +24,13 @@ git clone https://github.com/daithehh04/mindmaps_fe.git
 npm i
 ```
 
-### Setup .env file
+### Step 3: Setup .env file
 
 ```js
 VITE_SERVER_API =
 ```
 
-### Start the App
+### Step 4: Start the App
 
 ```shell
 npm run dev
