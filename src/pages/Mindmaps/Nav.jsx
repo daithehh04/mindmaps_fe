@@ -26,6 +26,7 @@ import { FiPlus } from "react-icons/fi"
 import { createMindmap } from "~/services/mindmap.service"
 import { setKey } from "~/stores/slices/maps.slice"
 import { useDebouncedCallback } from "use-debounce"
+import ButtonCreateMap from "~/components/ButtonCreateMap"
 
 const heading = {
   "/my-mindmap": "My Maps",
@@ -197,29 +198,25 @@ function Navigate({ onSearch, onLoading }) {
       <div className="flex gap-4">
         {(pathname === "/my-mindmap" || pathname === "/maps/public") && (
           <button
-            className="px-12 mt-4 mb-6 flex gap-1 w-max items-center btn-primary py-2 !rounded-xl"
+            className="px-8 mt-4 mb-6 flex gap-1 w-max items-center btn-primary py-2 !rounded-xl"
             onClick={onOpen}
           >
             <FiPlus fontSize={"3rem"} />
           </button>
         )}
         {(pathname === "/my-mindmap" || pathname === "/maps/public") && (
-          <button
-            className="px-6 mt-4 mb-6 flex-col flex gap-1 w-max items-center bg-[#0000000D] hover:bg-[#1d1d1d1f] py-5 !rounded-xl"
+          <ButtonCreateMap
+            src={"/image/chart-map.svg"}
+            name="Org chart"
             onClick={() => handleCreateMindmap(1)}
-          >
-            <img src="/image/chart-map.svg" alt="" />
-            <p className="text-sm text-black">Org chart</p>
-          </button>
+          />
         )}
         {(pathname === "/my-mindmap" || pathname === "/maps/public") && (
-          <button
-            className="px-6 mt-4 mb-6 flex flex-col gap-1 w-max items-center bg-[#0000000D] hover:bg-[#1d1d1d1f] py-5 !rounded-xl"
+          <ButtonCreateMap
+            src={"/image/project-retrospective.svg"}
+            name="Retrospective"
             onClick={() => handleCreateMindmap2(2)}
-          >
-            <img src="/image/project-retrospective.svg" alt="" />
-            <p className="text-sm text-black">Retrospective</p>
-          </button>
+          />
         )}
       </div>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl">
@@ -233,29 +230,19 @@ function Navigate({ onSearch, onLoading }) {
                 <div className="flex gap-4">
                   {(pathname === "/my-mindmap" ||
                     pathname === "/maps/public") && (
-                    <button
-                      className="px-6 mt-4 mb-6 flex flex-col gap-1 w-max items-center bg-[#0000000D] hover:bg-[#1d1d1d1f] py-5 !rounded-xl"
-                      onClick={() => {
-                        onClose()
-                        return handleCreateMindmap(1)
-                      }}
-                    >
-                      <img src="/image/chart-map.svg" alt="" />
-                      <p className="text-sm text-black">Org chart</p>
-                    </button>
+                    <ButtonCreateMap
+                      src={"/image/chart-map.svg"}
+                      name="Org chart"
+                      onClick={() => handleCreateMindmap(1)}
+                    />
                   )}
                   {(pathname === "/my-mindmap" ||
                     pathname === "/maps/public") && (
-                    <button
-                      className="px-6 mt-4 mb-6 flex flex-col gap-1 w-max items-center bg-[#0000000D] hover:bg-[#1d1d1d1f] py-5 !rounded-xl"
-                      onClick={() => {
-                        onClose()
-                        return handleCreateMindmap2(2)
-                      }}
-                    >
-                      <img src="/image/project-retrospective.svg" alt="" />
-                      <p className="text-sm text-black">Retrospective</p>
-                    </button>
+                    <ButtonCreateMap
+                      src={"/image/project-retrospective.svg"}
+                      name="Retrospective"
+                      onClick={() => handleCreateMindmap2(2)}
+                    />
                   )}
                 </div>
               </ModalBody>
