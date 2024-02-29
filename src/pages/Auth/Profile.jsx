@@ -88,8 +88,8 @@ export default function Profile() {
   return (
     <>
       <Helmet>
-        <title>Account | Mindmap</title>
-        <meta name="description" content="Account Profile mindmap" />
+        <title>Profile | Mindmap</title>
+        <meta name="description" content="Profile mindmap" />
       </Helmet>
       <div className="relative px-10 pt-10">
         <h3 className="mb-4 text-2xl font-bold capitalize">{userInfo.name}</h3>
