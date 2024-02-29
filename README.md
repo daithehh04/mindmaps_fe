@@ -1,9 +1,45 @@
-# React + Vite
+# Mindmap Project: React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![MindMap Image](./public/prj-img.png)
 
-Currently, two official plugins are available:
+The MindMap React + Vite project is a Mind Map creation and management application built with React and Vite. This application allows users to create, edit and share Mind Maps easily and flexibly.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-# react_folder_base
+## Install
+
+Make sure you have [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/) installed before starting.
+
+### Prerequisites
+
+**Node version 18.x.x**
+
+### Step 1: Clone the repository
+
+```shell
+git clone https://github.com/daithehh04/mindmaps_fe.git
+```
+
+### Step 2: Install packages
+
+```shell
+npm i
+```
+
+### Setup .env file
+
+```js
+VITE_SERVER_API =
+```
+
+### Start the App
+
+```shell
+npm run dev
+```
+
+## Available commands
+
+Running commands with npm `npm run [command]`
+
+| command | description                              |
+| :------ | :--------------------------------------- |
+| `dev`   | Starts a development instance of the app |
