@@ -1,8 +1,14 @@
 import { Helmet } from "react-helmet"
 import { FcGoogle } from "react-icons/fc"
-import { Link } from "react-router-dom"
+import { handleLoginWithGoogle } from "~/services/auth.service"
 
 export default function Home() {
+  const handleRedirect = async () => {
+    const res = await handleLoginWithGoogle()
+    if (res?.status === 200) {
+      window.location.href = res.metadata
+    }
+  }
   return (
     <>
       <Helmet>
@@ -16,15 +22,15 @@ export default function Home() {
             Collaborative <br /> Mind Mapping
           </h1>
           <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white py-6 px-8 rounded-full">
-            <Link
+            <button
               className="flex items-center gap-2 px-10 py-4 text-lg font-bold btn-primary"
-              to={"/api/auth/login"}
+              onClick={handleRedirect}
             >
               <div className="bg-white  rounded-full grid place-items-center w-[36px] h-[36px]">
                 <FcGoogle fontSize={"1.5rem"} />
               </div>
               Continue with Google
-            </Link>
+            </button>
           </div>
         </section>
         <ul className="flex items-center justify-center gap-8 mt-8 mb-8 content">
