@@ -6,8 +6,6 @@ The MindMap React + Vite project is a Mind Map creation and management applicati
 
 ## Install
 
-Make sure you have [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/) installed before starting.
-
 ### Prerequisites
 
 **Node version 18.x.x**
