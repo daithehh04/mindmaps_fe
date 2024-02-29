@@ -1,4 +1,4 @@
-# Mindmap Project: React + Vite
+# Mindmap Management: React + Vite
 
 ![MindMap Image](./public/image/prj-img.png)
 
