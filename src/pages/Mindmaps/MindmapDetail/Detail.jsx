@@ -69,6 +69,7 @@ function Detail() {
       ...updateMaps,
       title: titleRef.current,
       desc: descRef.current,
+      updated_at: new Date(),
     }
     try {
       const res = await dispatch(requestUpdateMindmap({ id, payload }))

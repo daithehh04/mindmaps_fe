@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux"
 import Loading from "~/components/Loading"
 import UploadImage from "~/components/UploadImage"
 import { handleChangePassword } from "~/services/auth.service"
-import { updateProfile } from "~/services/user.service"
 import { requestUpdateProfile } from "~/stores/middlewares/auth.middleware"
 import { api } from "~/utils/api"
 
@@ -136,7 +135,7 @@ export default function Profile() {
                         variant="bordered"
                         label="Description"
                         labelPlacement="inside"
-                        defaultValue={desc}
+                        defaultValue={userInfo.desc}
                         onChange={(e) => setDesc(e.target.value)}
                         placeholder="Enter your description"
                       />
