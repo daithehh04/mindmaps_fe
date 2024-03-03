@@ -30,7 +30,7 @@ function Login() {
 
   useEffect(() => {
     if (userInfo?.id) {
-      navigate("/")
+      navigate(-1)
     }
   }, [userInfo, navigate])
   const onSubmit = async (data) => {

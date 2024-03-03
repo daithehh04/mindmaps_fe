@@ -46,7 +46,7 @@ function Register() {
         toast.success("Register success!")
         navigate("/")
       } else {
-        toast.error("Email or Password incorrect!")
+        toast.error("Some thing went wrong!")
       }
     } catch (error) {
       console.log(error)

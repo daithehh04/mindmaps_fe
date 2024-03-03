@@ -38,9 +38,11 @@ function Mindmaps() {
         <meta name="description" content="my mindmap" />
       </Helmet>
       <Navigate onSearch={setSearch} onLoading={setLoading} />
-      <p className="text-lg">
-        {search ? `${maps?.metadata?.count} results for "${search}"` : ""}
-      </p>
+      {!isLoading && (
+        <p className="text-lg">
+          {search ? `${maps?.metadata?.count} results for "${search}"` : ""}
+        </p>
+      )}
       {(isLoading || loading) && (
         <div className="absolute inset-0 z-20 h-[100vh] flex items-center justify-center w-full bg-white opacity-70">
           <Loading />

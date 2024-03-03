@@ -13,10 +13,12 @@ function Trash() {
   const [page, setPage] = useState(1)
   const key = useSelector((state) => state.maps.key)
   const [search, setSearch] = useState("")
+  const userInfo = useSelector((state) => state.auth.userInfo)
   const query = {
     page,
     limit: 8,
     key,
+    userId: userInfo.id,
     q: search,
   }
   const queryStringified = queryString.stringify(query)
@@ -33,9 +35,11 @@ function Trash() {
         <meta name="description" content="trashed mindmap" />
       </Helmet>
       <Navigate onSearch={setSearch} />
-      <p className="text-lg">
-        {search ? `${maps?.metadata?.count} results for "${search}"` : ""}
-      </p>
+      {!isLoading && (
+        <p className="text-lg">
+          {search ? `${maps?.count} results for "${search}"` : ""}
+        </p>
+      )}
       {isLoading && (
         <div className="w-full absolute inset-0 opacity-70 h-[100vh] bg-white flex items-center justify-center">
           <Loading />

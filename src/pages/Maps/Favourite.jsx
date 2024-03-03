@@ -40,9 +40,11 @@ function Favorite() {
         <meta name="description" content="favorite mindmap" />
       </Helmet>
       <Navigate onSearch={setSearch} />
-      <p className="text-lg">
-        {search ? `${maps?.metadata?.count} results for "${search}"` : ""}
-      </p>
+      {!isLoading && (
+        <p className="text-lg">
+          {search ? `${maps?.metadata?.count} results for "${search}"` : ""}
+        </p>
+      )}
       {isLoading && (
         <div className="w-full h-[100vh] opacity-70 bg-white flex items-center justify-center">
           <Loading />

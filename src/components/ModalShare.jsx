@@ -25,7 +25,7 @@ import { useLocation } from "react-router-dom"
 function ModalShare({ isOpen, onOpenChange, idMap, apiServerUpdate }) {
   const { mutate } = useSWRConfig()
   let dataMapDetail = useSelector((state) => state.maps.mapsDetail)
-  const apiServer = `/mindmaps/${idMap}`
+  const apiServer = idMap ? `/mindmaps/${idMap}` : null
   const { data: maps, isLoading } = useSWR(apiServer, fetcher)
   let currentPath = window.location.href
   const [isSelected, setIsSelected] = useState(dataMapDetail?.status)
