@@ -156,9 +156,9 @@ function MapsList({ maps, loading, onPage, page, pages, type, apiServer }) {
     switch (columnKey) {
       case "title":
         return (
-          <div className="flex flex-col">
+          <Link to={`/my-mindmap/${map.id}`} className="flex flex-col">
             <p className="text-sm text-bold">{cellValue}</p>
-          </div>
+          </Link>
         )
       case "share":
         return (
